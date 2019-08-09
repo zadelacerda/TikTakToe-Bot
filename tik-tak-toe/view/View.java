@@ -61,11 +61,19 @@ public class View extends Application {
         buttons.add(RowA);
         buttons.add(RowB);
         buttons.add(RowC);
+        int x = (int) primaryStage.getWidth();
+        int y = (int) primaryStage.getHeight();
+        System.out.println(x +  " \n " + y);
 
         primaryStage.setScene(new Scene(layout, 600, 600));
         primaryStage.show();
-        player1.name = getPlayer();
-        player2.name = getPlayer();
+        x = (int) primaryStage.getWidth();
+        y = (int) primaryStage.getHeight();
+
+        System.out.println(x +  " \n " + y);
+
+        // player1.name = getPlayer();
+        // player2.name = getPlayer();
 
 
     }
@@ -82,17 +90,18 @@ public class View extends Application {
 
     }
 
-    public static String getPlayerName() {
-        TextInputDialog dialog = new TextInputDialog("");
+    //DO LATER: have player select their own symbol from given list
+    // public static String getPlayerSymbol() {
+    //     TextInputDialog dialog = new TextInputDialog("");
 
-        dialog.setHeaderText("Select your symbol:");
-        dialog.setContentText("Name: ");
+    //     dialog.setHeaderText("Select your symbol:");
+    //     dialog.setContentText("Name: ");
 
-        dialog.showAndWait();
+    //     dialog.showAndWait();
 
-        return dialog.getEditor().getText();
+    //     return dialog.getEditor().getText();
 
-    }
+    // }
 
     public void addButtonAction(EventHandler<ActionEvent> action) {
         for (int i = 0; i < 3; i++) {
