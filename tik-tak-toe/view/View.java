@@ -1,4 +1,3 @@
-package sample;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -16,14 +15,14 @@ import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Main extends Application {
+public class View extends Application {
     ArrayList<ArrayList<Button>> buttons = new ArrayList<ArrayList<Button>>();
     int defaultX = 50;
     int defaultY = 50;
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }   
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -63,15 +62,30 @@ public class Main extends Application {
         buttons.add(RowB);
         buttons.add(RowC);
 
-        primaryStage.setScene(new Scene(layout, 300, 300));
+        primaryStage.setScene(new Scene(layout, 600, 600));
         primaryStage.show();
+        player1.name = getPlayer();
+        player2.name = getPlayer();
+
 
     }
 
-    public static String getPlayer() {
+    public static String getPlayerName() {
         TextInputDialog dialog = new TextInputDialog("");
 
         dialog.setHeaderText("Enter your name:");
+        dialog.setContentText("Name: ");
+
+        dialog.showAndWait();
+
+        return dialog.getEditor().getText();
+
+    }
+
+    public static String getPlayerName() {
+        TextInputDialog dialog = new TextInputDialog("");
+
+        dialog.setHeaderText("Select your symbol:");
         dialog.setContentText("Name: ");
 
         dialog.showAndWait();

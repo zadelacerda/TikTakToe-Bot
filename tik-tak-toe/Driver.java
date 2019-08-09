@@ -3,7 +3,7 @@ package sample;
 public class Driver {
     public static void main(String[] args){
         TikTakToe model = new TikTakToe();
-        Main main = new Main();
+        View view = new View();
         Controller controller = new Controller(model, main);
 
         controller.setMain();

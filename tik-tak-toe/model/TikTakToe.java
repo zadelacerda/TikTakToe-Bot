@@ -13,10 +13,8 @@ import static javafx.application.Application.launch;
 public class TikTakToe {
 
     public static String[][] gameboard;
-    public static String player1;
-    public static String player2;
-    public static String X = "X";
-    public static String O = "O";
+    public static Player player1;
+    public static Player player2;
 
 
 //    public static void main(String[] args) {
