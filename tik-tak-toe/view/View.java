@@ -1,16 +1,22 @@
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -26,51 +32,66 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        // Controller c = root.getController();
-
         primaryStage.setTitle("Tik-Tak-Toe");
-        Pane layout = new Pane();
 
+        //StackPane to center the grid on the scene
+        StackPane layout = new StackPane();
+
+        //Scene to hold the grid
+        Scene scene = new Scene(layout, 600, 600);
         layout.setStyle("-fx-background-color: #87CEFA;");
+
+        //Grid holds buttons 
+        GridPane grid = new GridPane();
+        layout.getChildren().add(grid);
+        grid.setStyle("-fx-background-color: BLACK");
+        grid.setAlignment(Pos.BASELINE_CENTER);
+        grid.setPrefHeight(54);
+        grid.setPrefWidth(54);
+        grid.setHgap(3);
+        grid.setVgap(3);
 
         ArrayList<Button> RowA = new ArrayList<Button>();
         ArrayList<Button> RowB = new ArrayList<Button>();
         ArrayList<Button> RowC = new ArrayList<Button>();
 
-        for (int i = 0; i < 3; i++) {
-            RowA.add(new Button("       "));
-            RowA.get(i).setLayoutX((defaultX * i + 65));
-            RowA.get(i).setLayoutY((defaultY * 1 + 65));
-            layout.getChildren().add(RowA.get(i));
-            //RowA.get(i).setOnAction(buttonHandler);
-
-            RowB.add(new Button("       "));
-            RowB.get(i).setLayoutX((defaultX * i + 65));
-            RowB.get(i).setLayoutY((defaultY * 2 + 65));
-            layout.getChildren().add(RowB.get(i));
-//            RowB.get(i).setOnAction(buttonHandler);
-
-            RowC.add(new Button("       "));
-            RowC.get(i).setLayoutX((defaultX * i + 65));
-            RowC.get(i).setLayoutY((defaultY * 3 + 65));
-            layout.getChildren().add(RowC.get(i));
-//            RowC.get(i).setOnAction(buttonHandler);
+        //Custom button handler
+        class ButtonHandler implements EventHandler<ActionEvent> {
+            @Override
+            public void handle(ActionEvent event){
+                /* When button is clicked */
+                Button button = (Button) event.getSource();
+                button.setText("boop");
+            }
         }
 
+        //Add buttons to grid
+        ButtonHandler buttonHandler = new ButtonHandler();
+        for (int i = 0; i < 3; i++) {
+            RowA.add(new Button("       "));
+            RowA.get(i).setPrefSize(120, 120);
+            RowA.get(i).setOnAction(buttonHandler);
+            grid.add(RowA.get(i), i, 1);
+
+            RowB.add(new Button("       "));
+            RowB.get(i).setPrefSize(120, 120);
+            RowB.get(i).setOnAction(buttonHandler);
+            grid.add(RowB.get(i), i, 2);
+
+            RowC.add(new Button("       "));
+            RowC.get(i).setPrefSize(120, 120);
+            RowC.get(i).setOnAction(buttonHandler);
+            grid.add(RowC.get(i), i, 3);
+        }
+        
+        // setButtonText();
         buttons.add(RowA);
         buttons.add(RowB);
         buttons.add(RowC);
-        int x = (int) primaryStage.getWidth();
-        int y = (int) primaryStage.getHeight();
-        System.out.println(x +  " \n " + y);
 
-        primaryStage.setScene(new Scene(layout, 600, 600));
+        primaryStage.setScene(scene);
         primaryStage.show();
-        x = (int) primaryStage.getWidth();
-        y = (int) primaryStage.getHeight();
 
-        System.out.println(x +  " \n " + y);
 
         // player1.name = getPlayer();
         // player2.name = getPlayer();
