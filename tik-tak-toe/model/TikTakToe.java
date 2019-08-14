@@ -6,6 +6,7 @@ package model;
  **/
 public class TikTakToe {
 
+    private static TikTakToe game = new TikTakToe();
     private static String[][] gameboard;
     private static Player player1;
     private static Player player2;
@@ -13,6 +14,7 @@ public class TikTakToe {
     private static int total_turns;
     private static final String X = "X";
     private static final String O = "O";
+
 
     private void startGame(ArrayList<String> names, ArrayList<String> icons) {
         Controller controller = Controller.getController();
@@ -26,6 +28,10 @@ public class TikTakToe {
         player2.setName(names.get(1));
         player1.setSymbol(icons.get(0));
         player2.setSymbol(icons.get(1));
+    }
+
+    public static TikTakToe getTikTakToe(){
+        return game;
     }
 
     public static boolean checkBoard(String value) {
