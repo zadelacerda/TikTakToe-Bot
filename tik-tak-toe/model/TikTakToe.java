@@ -1,93 +1,83 @@
-package sample;
-
-//import javax.swing.*;
-
-import static javafx.application.Application.launch;
+package model;
 
 /**
- * Zephren de la Cerda
- * Tik-Tak-Toe
- * 6/7/2019
- *
+ * Zephren de la Cerda Tik-Tak-Toe 8/1/2019
+ * Benjamin Larkin
  **/
 public class TikTakToe {
 
-    public static String[][] gameboard;
-    public static Player player1;
-    public static Player player2;
+    private static String[][] gameboard;
+    private static Player player1;
+    private static Player player2;
+    private static Player currentPlayer;
+    private static int total_turns;
+    private static final String X = "X";
+    private static final String O = "O";
 
-
-//    public static void main(String[] args) {
-//        //launch(args);
-//        gameboard = new String[3][3];
-//        initBoard();
-//        String currPlayer;
-////        player1 = JOptionPane.showInputDialog("Player 1: enter your name.");
-////        player2 = JOptionPane.showInputDialog("Player 2: enter your name.");
-//        printBoard();
-//        int total_turns = 0;
-//        while (total_turns < 10) {
-//            takeTurn(player1);
-//            if (checkBoard(X)) {
-//                //player1 wins congrats
-//                System.out.println("Congrats! " + player1 + " you win!");
-//                System.exit(0);
-//            }
-//            total_turns++;
-//            printBoard();
-//
-//            takeTurn(player2);
-//            if (checkBoard(O)) {
-//                //player2 wins xDDDD
-//                System.out.println("Congrats! " + player2 + " you win!");
-//                System.exit(0);
-//            }
-//            total_turns++;
-//            printBoard();
-//        }
-//    }
-
-    public static boolean checkBoard(String value) {
-        //check diagonals
-        if (checkDiagonals(value) == true)
-            return true;
-
-        //check horizontals
-        if (checkHorizontals(value) == true)
-            return true;
-
-        //check verticals
-        if (checkVerticals(value) == true)
-            return true;
-
-        return false;
-
+    private void startGame(ArrayList<String> names, ArrayList<String> icons) {
+        Controller controller = Controller.getController();
+        initPlayers(names, icons);
+        initBoard();
+        total_turns = 0;
     }
 
-    public static void takeTurn(String player) {
-//        int x = Integer.parseInt(JOptionPane.showInputDialog("Enter which column: (1-3)")) - 1;
-//        int y = Integer.parseInt(JOptionPane.showInputDialog("Enter which row: (1-3)")) - 1;
+    private void initPlayers(ArrayList<String> names, ArrayList<String> icons) {
+        player1.setName(names.get(0));
+        player2.setName(names.get(1));
+        player1.setSymbol(icons.get(0));
+        player2.setSymbol(icons.get(1));
+    }
 
-//        if (player == player1) {
-//            gameboard[x][y] = X;
-//        } else if (player == player2) {
-//            gameboard[x][y] = O;
-//        }
+    public static boolean checkBoard(String value) {
+        // check diagonals
+        if (checkDiagonals(value) == true) {
+            // handle winning
+            return true;
+        }
+        // check horizontals
+        if (checkHorizontals(value) == true) {
+            // handle winning
+            return true;
+        }
+        // check verticals
+        if (checkVerticals(value) == true) {
+            // handle winning
+            return true;
+        }
+        if (total_turns > 10) {
+            // handle tie event
+        }
+        // continue game
+        return false;
+    }
+
+    public static void takeTurn1(String location) {
+        // find location from String input
+        gameboard[x][y] = X;
+        total_turns++;
+        checkBoard(X);
+    }
+
+    public static void takeTurn2(String location) {
+        // find location from String input
+        gameboard[x][y] = O;
+        total_turns++;
+        checkBoard(O);
     }
 
     public static boolean checkDiagonals(String value) {
         int counter = 0;
-        for (int i = 0; i < 3; i++){
-            if (gameboard[i][i] == value){
+        for (int i = 0; i < 3; i++) {
+            if (gameboard[i][i] == value) {
                 counter++;
             }
         }
-        if (counter == 3){
+        if (counter == 3) {
             return true;
         }
         counter = 0;
 
-        if (gameboard[0][2] == value && gameboard[1][1] == value && gameboard[2][0] == value){
+        if (gameboard[0][2] == value && gameboard[1][1] == value && gameboard[2][0] == value) {
             return true;
         }
         return false;
@@ -123,30 +113,11 @@ public class TikTakToe {
         return false;
     }
 
-    public static void printBoard(){
-        for (int i = 0; i < 3; i++){
-            for (int k = 0; k < 3; k++){
-                System.out.print(" " + gameboard[i][k] + " ");
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        System.out.println("");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("");
-        System.out.println("");
-    }
-
     public static void initBoard() {
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
-                gameboard[i][k] = "zephren";
+                gameboard[i][k] = "ben&zephren";
             }
         }
-    }
-
-    public static void initPlayers(String p1, String p2){
-        player1 = p1;
-        player2 = p2;
     }
 }
