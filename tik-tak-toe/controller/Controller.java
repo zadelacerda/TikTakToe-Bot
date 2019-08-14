@@ -7,7 +7,7 @@ import view.*;
 public class Controller {
     private static TikTakToe game;
     private static View view;
-    private static Controller controller = new Controller();
+    private static Controller controller;
 
     private Controller() {
         game = TikTakToe.newGame(); // lazy initialization/singleton
@@ -15,7 +15,11 @@ public class Controller {
         // view.startGame();
     }
 
+    // lazy initialization
     public static Controller getController() {
+        if (controller = null) {
+            controller = new Controller();
+        }
         return controller;
     }
 
