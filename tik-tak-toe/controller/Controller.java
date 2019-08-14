@@ -1,50 +1,57 @@
-// import java.util.*;
-// import model.*;
-// import view.*;
+package controller;
 
-// public class Controller {
-//     private static TikTakToe game;
-//     private static View view;
-//     private static Controller controller = new Controller();
+import java.util.*;
+import model.*;
+import view.*;
 
-//     private Controller() {
-//         game = TikTakToe.newGame(); // lazy initialization/singleton
-//         view = new View();
-//         // view.startGame();
-//     }
+public class Controller {
+    private static TikTakToe game;
+    private static View view;
+    private static Controller controller = new Controller();
 
-//     public static Controller getController() {
-//         return controller;
-//     }
+    private Controller() {
+        game = TikTakToe.newGame(); // lazy initialization/singleton
+        view = new View();
+        // view.startGame();
+    }
 
-//     /* view related functions */
+    public static Controller getController() {
+        return controller;
+    }
 
-//     public void startGame() {
-//         // game.startGame();
-//     }
+    /* view related functions */
 
-//     public static void gameButtonPressed() {
-//         // update model/gamestate
-//     }
+    public void startGame() {
+        ArrayList<String> names = new ArrayList<String>();
+        names.add(frame.getPlayerName());
+        names.add(frame.getPlayerName());
+        // add icons later
+        ArrayList<String> icons = new ArrayList<String>();
+        // game.startGame(names, icons);
+    }
 
-//     public static void exitButtonPressed() {
-//         // close program
-//     }
+    public static void gameButtonPressed() {
+        // update model/gamestate
+    }
 
-//     /* model related functions */
+    public static void exitButtonPressed() {
+        // close program
+    }
 
-//     // updates view to display winning player
-//     public static void gameOver(Player player) {
+    /* model related functions */
 
-//     }
+    // updates view to display winning player
+    public static void gameOver(Player player) {
 
-//     // updates scoreboard with current game count
-//     public static void updateScoreBoard(int[] score) {
+    }
 
-//     }
+    // updates scoreboard with current game count
+    public static void updateScoreBoard(int[] score) {
 
-//     public static void updateCurrPlayer(Player player) {
+    }
 
-//     }
+    public static void updateCurrPlayer(Player player) {
 
-// }
+    }
+
+}
