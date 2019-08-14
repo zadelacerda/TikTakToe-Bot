@@ -5,27 +5,31 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+// import javafx.scene.image.Image;
+// import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
+import javafx.scene.effect.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class View extends Application {
-    ArrayList<ArrayList<Button>> buttons = new ArrayList<ArrayList<Button>>();
-    int defaultX = 50;
-    int defaultY = 50;
-
+    Button[][] buttons = new Button[3][3];
+    Boolean turn = false;
     public static void main(String[] args) {
         launch(args);
     }   
@@ -44,16 +48,13 @@ public class View extends Application {
         //Grid holds buttons 
         GridPane grid = new GridPane();
         layout.getChildren().add(grid);
-        grid.setStyle("-fx-background-color: BLACK");
+        grid.setStyle("-fx-background-color: #F08080;");
+        grid.setPadding(new Insets(50, 10, 10, 10));
         grid.setAlignment(Pos.BASELINE_CENTER);
         grid.setPrefHeight(54);
         grid.setPrefWidth(54);
         grid.setHgap(3);
         grid.setVgap(3);
-
-        ArrayList<Button> RowA = new ArrayList<Button>();
-        ArrayList<Button> RowB = new ArrayList<Button>();
-        ArrayList<Button> RowC = new ArrayList<Button>();
 
         //Custom button handler
         class ButtonHandler implements EventHandler<ActionEvent> {
@@ -61,37 +62,53 @@ public class View extends Application {
             public void handle(ActionEvent event){
                 /* When button is clicked */
                 Button button = (Button) event.getSource();
-                button.setText("boop");
+                // button.setText("boop");
+                if (turn){
+                    button.setGraphic(new ImageView("/images/waffle.jpg"){{
+                        setFitWidth(100);
+                        setFitHeight(100);
+                    }});
+                    turn = false;
+                } else {
+                    button.setGraphic(new ImageView("/images/pancake.jpg"){{
+                        setFitWidth(100);
+                        setFitHeight(100);
+                    }});
+                    turn = true;
+                }
             }
         }
 
-        //Add buttons to grid
+        DropShadow shadow = new DropShadow();
         ButtonHandler buttonHandler = new ButtonHandler();
+
+        //Add buttons to grid
         for (int i = 0; i < 3; i++) {
-            RowA.add(new Button("       "));
-            RowA.get(i).setPrefSize(120, 120);
-            RowA.get(i).setOnAction(buttonHandler);
-            grid.add(RowA.get(i), i, 1);
-
-            RowB.add(new Button("       "));
-            RowB.get(i).setPrefSize(120, 120);
-            RowB.get(i).setOnAction(buttonHandler);
-            grid.add(RowB.get(i), i, 2);
-
-            RowC.add(new Button("       "));
-            RowC.get(i).setPrefSize(120, 120);
-            RowC.get(i).setOnAction(buttonHandler);
-            grid.add(RowC.get(i), i, 3);
+            for (int j = 0; j < 3; j++){
+            buttons[i][j] = new Button("");
+            buttons[i][j].setPrefSize(120, 120);
+            buttons[i][j].setOnAction(buttonHandler);
+            buttons[i][j].setStyle("-fx-background-color: #DC143C;");
+            buttons[i][j].addEventHandler(MouseEvent.MOUSE_ENTERED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Button button = (Button) e.getSource();
+                    button.setEffect(shadow);
+                }});
+            buttons[i][j].addEventHandler(MouseEvent.MOUSE_EXITED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Button button = (Button) e.getSource();
+                    button.setEffect(null);
+                }});
+            grid.add(buttons[i][j], i, j + 10);
+            }
         }
         
-        // setButtonText();
-        buttons.add(RowA);
-        buttons.add(RowB);
-        buttons.add(RowC);
-
+        Text nextPlayer = new Text("Player1: Your Turn.");
+        grid.add(nextPlayer, 1, 0);
         primaryStage.setScene(scene);
         primaryStage.show();
-
 
         // player1.name = getPlayer();
         // player2.name = getPlayer();
@@ -122,15 +139,5 @@ public class View extends Application {
 
     //     return dialog.getEditor().getText();
 
-    // }
-
-    public void addButtonAction(EventHandler<ActionEvent> action) {
-        for (int i = 0; i < 3; i++) {
-            for (int k = 0; k < 3; k++) {
-                System.out.println(i + " "+ k);
-                buttons.get(i).get(k).setOnAction(action);
-                System.out.println("Hello");
-            }
-        }
-    }
+    //}
 }
