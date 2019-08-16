@@ -34,8 +34,15 @@ public class Controller {
         // game.startGame(names, icons);
     }
 
-    public static void gameButtonPressed() {
+    public static void gameButtonPressed(String whichTurn, String buttonIdString) {
         // update model/gamestate
+        game.convertInput(buttonIdString);
+        if(whichTurn == "X"){
+            game.takeTurn1();
+        }
+        else{
+            game.takeTurn2();
+        }
     }
 
     public static void exitButtonPressed() {
