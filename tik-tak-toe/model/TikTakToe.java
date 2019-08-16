@@ -1,8 +1,7 @@
 package model;
 
 /**
- * Zephren de la Cerda Tik-Tak-Toe 8/1/2019
- * Benjamin Larkin
+ * Zephren de la Cerda Tik-Tak-Toe 8/1/2019 Benjamin Larkin
  **/
 public class TikTakToe {
 
@@ -14,7 +13,8 @@ public class TikTakToe {
     private static int total_turns;
     private static final String X = "X";
     private static final String O = "O";
-
+    private static int inputX;
+    private static int inputY;
 
     private void startGame(ArrayList<String> names, ArrayList<String> icons) {
         Controller controller = Controller.getController();
@@ -30,7 +30,7 @@ public class TikTakToe {
         player2.setSymbol(icons.get(1));
     }
 
-    public static TikTakToe getTikTakToe(){
+    public static TikTakToe getTikTakToe() {
         return game;
     }
 
@@ -57,16 +57,16 @@ public class TikTakToe {
         return false;
     }
 
-    public static void takeTurn1(String location) {
+    public static void takeTurn1() {
         // find location from String input
-        gameboard[x][y] = X;
+        gameboard[inputX][inputY] = X;
         total_turns++;
         checkBoard(X);
     }
 
-    public static void takeTurn2(String location) {
+    public static void takeTurn2() {
         // find location from String input
-        gameboard[x][y] = O;
+        gameboard[inputX][inputY] = O;
         total_turns++;
         checkBoard(O);
     }
@@ -124,6 +124,47 @@ public class TikTakToe {
             for (int k = 0; k < 3; k++) {
                 gameboard[i][k] = "ben&zephren";
             }
+        }
+    }
+
+    // deciphers buttonid string to corresponding tile in order to update gameboard
+    public static void convertInput(String s) {
+        int i = Integer.parseInt(s);
+        if (i == 0) {
+            inputX = 0;
+            inputY = 0;
+        }
+        if (i == 1) {
+            inputX = 0;
+            inputY = 1;
+        }
+        if (i == 2) {
+            inputX = 0;
+            inputY = 2;
+        }
+        if (i == 3) {
+            inputX = 1;
+            inputY = 0;
+        }
+        if (i == 4) {
+            inputX = 1;
+            inputY = 1;
+        }
+        if (i == 5) {
+            inputX = 1;
+            inputY = 2;
+        }
+        if (i == 6) {
+            inputX = 2;
+            inputY = 0;
+        }
+        if (i == 7) {
+            inputX = 2;
+            inputY = 1;
+        }
+        if (i == 8) {
+            inputX = 2;
+            inputY = 2;
         }
     }
 }
