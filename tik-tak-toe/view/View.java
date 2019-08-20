@@ -17,7 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+
 // import javafx.scene.image.Image;
 // import javafx.scene.image.ImageView;
 import javafx.scene.image.*;
@@ -28,8 +29,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class View extends Application {
-    Button[][] buttons = new Button[3][3];
-    Boolean turn = false;
+    static Button[][] buttons = new Button[3][3];
+    static int turnCounter = 0;
+    
+    static Boolean player1 = true;
+    static Boolean player2 = false;
+    static Boolean turn = player1;
+
     public static void main(String[] args) {
         launch(args);
     }   
@@ -41,11 +47,11 @@ public class View extends Application {
         //StackPane to center the grid on the scene
         StackPane layout = new StackPane();
 
-        //Scene to hold the grid
+        /* Scene to hold the grid */
         Scene scene = new Scene(layout, 600, 600);
         layout.setStyle("-fx-background-color: #87CEFA;");
 
-        //Grid holds buttons 
+        /* Grid that holds buttons */
         GridPane grid = new GridPane();
         layout.getChildren().add(grid);
         grid.setStyle("-fx-background-color: #F08080;");
@@ -56,65 +62,75 @@ public class View extends Application {
         grid.setHgap(3);
         grid.setVgap(3);
 
-        //Custom button handler
-        class ButtonHandler implements EventHandler<ActionEvent> {
+
+        initButtons(grid);
+        
+
+        /* Reset Button */
+        Button resetButton = new Button("RESET");
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                initButtons(grid);
+            }
+        });
+        resetButton.setStyle("-fx-background-color: #DC143C;");
+        resetButton.setPrefSize(100, 40);
+        addShadow(resetButton);
+        grid.add(resetButton, 2, 0);
+
+        
+        setPlayerText(grid);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+
+    public static void initButtons(GridPane grid){
+         /* Custom Button Handler */
+         class ButtonHandler implements EventHandler<ActionEvent> {
             @Override
             public void handle(ActionEvent event){
-                /* When button is clicked */
+                /* When button is clicked - add pictures to buttons */
                 Button button = (Button) event.getSource();
-                // button.setText("boop");
                 if (turn){
-                    button.setGraphic(new ImageView("/images/waffle.jpg"){{
+                    /* First players turn */
+                    button.setGraphic(new ImageView("/images/waffles.png"){{
                         setFitWidth(100);
                         setFitHeight(100);
+                        setStyle("-fx-background-color:transparent;");
                     }});
-                    turn = false;
+                    turn = player2;
                 } else {
-                    button.setGraphic(new ImageView("/images/pancake.jpg"){{
+                    /* Second players turn */
+                    button.setGraphic(new ImageView("/images/pancake.png"){{
                         setFitWidth(100);
                         setFitHeight(100);
                     }});
-                    turn = true;
+                    turn = player1;
                 }
+                button.setDisable(true); 
+                turnCounter++;
+                setPlayerText(grid);
             }
         }
-
-        DropShadow shadow = new DropShadow();
+        
         ButtonHandler buttonHandler = new ButtonHandler();
 
-        //Add buttons to grid
+        /* Add Buttons to Grid */
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++){
             buttons[i][j] = new Button("");
             buttons[i][j].setPrefSize(120, 120);
             buttons[i][j].setOnAction(buttonHandler);
             buttons[i][j].setStyle("-fx-background-color: #DC143C;");
-            buttons[i][j].addEventHandler(MouseEvent.MOUSE_ENTERED, 
-            new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent e) {
-                    Button button = (Button) e.getSource();
-                    button.setEffect(shadow);
-                }});
-            buttons[i][j].addEventHandler(MouseEvent.MOUSE_EXITED, 
-            new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent e) {
-                    Button button = (Button) e.getSource();
-                    button.setEffect(null);
-                }});
+            addShadow(buttons[i][j]);
             grid.add(buttons[i][j], i, j + 10);
+            buttons[i][j].setId(Integer.toString(i));
             }
         }
-        
-        Text nextPlayer = new Text("Player1: Your Turn.");
-        grid.add(nextPlayer, 1, 0);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        // player1.name = getPlayer();
-        // player2.name = getPlayer();
-
-
     }
+
 
     public static String getPlayerName() {
         TextInputDialog dialog = new TextInputDialog("");
@@ -125,7 +141,39 @@ public class View extends Application {
         dialog.showAndWait();
 
         return dialog.getEditor().getText();
+    }
 
+
+    public static void setPlayerText(GridPane grid){
+        // String currPlayer = "Test";
+        // if (turn){
+        //     //currPlayer = player1.name;
+        // } else {
+        //     //currPlayer = player2.name
+        // }
+
+        /* Next Player Text */
+        Text nextPlayer = new Text(currPlayer + ": Your Turn.");
+        grid.add(nextPlayer, 1, 0);
+        
+    }
+
+
+    public static void addShadow(Button button){
+        DropShadow shadow = new DropShadow();
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Button button = (Button) e.getSource();
+                    button.setEffect(shadow);
+                }});
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Button button = (Button) e.getSource();
+                    button.setEffect(null);
+                }});
     }
 
     //DO LATER: have player select their own symbol from given list
