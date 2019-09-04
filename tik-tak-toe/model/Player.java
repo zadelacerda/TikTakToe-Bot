@@ -1,20 +1,22 @@
+package model;
+
 public class Player {
     private String name;
     private String symbol;
 
-    public setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public getName(){
+    public String getName() {
         return name;
     }
 
-    public setSymbol(String symbol){
+    public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
 
-    public getSymbol(){
+    public String getSymbol() {
         return symbol;
     }
 }
