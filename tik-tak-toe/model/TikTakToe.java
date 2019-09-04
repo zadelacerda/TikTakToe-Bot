@@ -1,5 +1,10 @@
 package model;
 
+import java.util.*;
+
+
+import controller.Controller;   
+
 /**
  * Zephren de la Cerda Tik-Tak-Toe 8/1/2019 Benjamin Larkin
  **/
@@ -15,6 +20,7 @@ public class TikTakToe {
     private static final String O = "O";
     private static int inputX;
     private static int inputY;
+
 
     private void startGame(ArrayList<String> names, ArrayList<String> icons) {
         Controller controller = Controller.getController();
@@ -59,16 +65,23 @@ public class TikTakToe {
 
     public static void takeTurn1() {
         // find location from String input
+        System.out.println("\n\n\n" + inputX + inputY + "\n\n\n\"");
         gameboard[inputX][inputY] = X;
         total_turns++;
-        checkBoard(X);
+        if (checkBoard(X)){
+            //update controller
+            Controller.gameOver(player1);
+        }
     }
 
     public static void takeTurn2() {
         // find location from String input
         gameboard[inputX][inputY] = O;
         total_turns++;
-        checkBoard(O);
+        if (checkBoard(O)){
+            //update controller
+            Controller.gameOver(player2);
+        }
     }
 
     public static boolean checkDiagonals(String value) {

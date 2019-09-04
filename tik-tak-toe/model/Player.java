@@ -3,7 +3,7 @@ package model;
 public class Player {
     private String name;
     private String symbol;
-
+   
     public void setName(String name) {
         this.name = name;
     }
