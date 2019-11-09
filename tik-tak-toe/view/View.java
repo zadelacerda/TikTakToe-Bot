@@ -145,12 +145,12 @@ public class View extends Application {
 
 
     public static void setPlayerText(GridPane grid){
-        // String currPlayer = "Test";
-        // if (turn){
-        //     //currPlayer = player1.name;
-        // } else {
-        //     //currPlayer = player2.name
-        // }
+        String currPlayer = "Test";
+        if (turn){
+            currPlayer = "player 1"; //player1.name;
+        } else {
+            currPlayer = "player 2"; //player2.name;
+        }
 
         /* Next Player Text */
         Text nextPlayer = new Text(currPlayer + ": Your Turn.");
