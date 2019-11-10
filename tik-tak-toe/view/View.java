@@ -29,7 +29,7 @@ import javafx.scene.effect.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import controller.Controller;
+// import controller.*;
 
 public class View extends Application {
     static Button[][] buttons = new Button[3][3];
@@ -98,25 +98,24 @@ public class View extends Application {
                 Button button = (Button) event.getSource();
                 if (turn){
                     /* First players turn */
-                    // button.setGraphic(new ImageView("/images/waffles.png"){{
-                    //     setFitWidth(100);
-                    //     setFitHeight(100);
-                    // }});
-                    button.setText("X");
+                    button.setGraphic(new ImageView("/images/waffles.png"){{
+                        setFitWidth(100);
+                        setFitHeight(100);
+                        setStyle("-fx-background-color:transparent;");
+                    }});
                     turn = player2;
                 } else {
                     /* Second players turn */
-                    // button.setGraphic(new ImageView("/images/pancake.png"){{
-                    //     setFitWidth(100);
-                    //     setFitHeight(100);
-                    // }});
-                    button.setText("O");        
+                    button.setGraphic(new ImageView("/images/pancake.png"){{
+                        setFitWidth(100);
+                        setFitHeight(100);
+                    }});
                     turn = player1;
                 }
                 button.setDisable(true); 
                 turnCounter++;
                 setPlayerText(grid);
-                Controller.gameButtonPressed(turn, button.getId());
+                // Controller.gameButtonPressed(turn, button.getId());
             }
         }
         
@@ -152,11 +151,11 @@ public class View extends Application {
 
 
     public static void setPlayerText(GridPane grid){
-        String currPlayer = "Test";
+        String currPlayer = "Player 1";
         if (turn){
-            //currPlayer = player1.name;
+            // currPlayer = player1.name;
         } else {
-            //currPlayer = player2.name
+            // currPlayer = player2.name
         }
 
         /* Next Player Text */

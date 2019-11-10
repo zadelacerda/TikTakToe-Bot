@@ -1,7 +1,8 @@
 import javafx.application.Application;
 
 
-import controller.Controller;
+import controller.*;
+import view.*;
 
 public class Driver {  
     public static void main(String[] args) {
